@@ -47,6 +47,8 @@ if(session_id() == '' || !isset($_SESSION)){session_start();}
       </section>
     </nav>
 
+    
+
 
 
 
@@ -55,13 +57,32 @@ if(session_id() == '' || !isset($_SESSION)){session_start();}
 
         <p>Wanna get in touch. Email us at <a href="mailto:support@techbarrack.com">support@electrobyte.com</a></p>
 
-        <footer>
+        <?php
+$arr = array('If','you','want','quality','you','are','in the','right place');
+echo implode(" ",$arr);
+?>
+ <br><br>
+
+ <!-- <?php
+$str = "If you want quality";
+print_r (explode(" ",$str));
+?>  -->
+        <br><br> 
+        <?php
+$number = 38344855688;
+$str = "Kosovo";
+printf("Our branch number %u in %s.",$number,$str);
+?>
+
+
+
+<footer>
            <p style="text-align:center; font-size:0.8em;">&copy;ELECTROBYTE. All Rights Reserved.</p>
         </footer>
-
       </div>
     </div>
 
+  
 
 
 

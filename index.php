@@ -1,10 +1,3 @@
-<?php
-
-//if (session_status() !== PHP_SESSION_ACTIVE) {session_start();}
-if(session_id() == '' || !isset($_SESSION)){session_start();}
-
-?>
-
 <!DOCTYPE html>
 <html class="no-js" lang="en">
   <head>
@@ -19,7 +12,61 @@ if(session_id() == '' || !isset($_SESSION)){session_start();}
 
     <script src="js/vendor/modernizr.js"></script>
   </head>
-  <body>
+  <body style="background: #0f2027; background: -webkit-linear-gradient(to right, #0f2027, #203a43, #2c5364);  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);">
+  <?php
+// define variables and set to empty values
+$nameErr = $emailErr = $genderErr = $websiteErr = "";
+$name = $email = $gender = $comment = $website = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (empty($_POST["name"])) {
+    $nameErr = "Name is required";
+  } else {
+    $name = test_input($_POST["name"]);
+    // check if name only contains letters and whitespace
+    if (!preg_match("/^[a-zA-Z-' ]*$/",$name)) {
+      $nameErr = "Only letters and white space allowed";
+    }
+  }
+  
+  if (empty($_POST["email"])) {
+    $emailErr = "Email is required";
+  } else {
+    $email = test_input($_POST["email"]);
+    // check if e-mail address is well-formed
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $emailErr = "Invalid email format";
+    }
+  }
+    
+  if (empty($_POST["website"])) {
+    $website = "";
+  } else {
+    $website = test_input($_POST["website"]);
+    // check if URL address syntax is valid
+    if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$website)) {
+      $websiteErr = "Invalid URL";
+    }    
+  }
+
+  if (empty($_POST["comment"])) {
+    $comment = "";
+  } else {
+    $comment = test_input($_POST["comment"]);
+  }
+
+  
+}
+
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+?>
+
+
 
     <nav class="top-bar" data-topbar role="navigation">
       <ul class="title-area">
@@ -242,13 +289,38 @@ if(session_id() == '' || !isset($_SESSION)){session_start();}
             <div class="boxes">
                 <h1>Contact Us</h1>
 
-                <form action="validate.php" name="contact-us" id="form" method="POST">
-                  <div id="message"></div>
-                  <input class="forma" type="text" name="username" id="username" placeholder="Name"  >
-                  <input class="forma" type="email" name="email" id="email" placeholder="Email" >
-                  <textarea class="forma1" name="message" id="textarea" cols="30" rows="10"  ></textarea > 
-                  <input class="butoni" type="submit"  value="SUBMIT">
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
+                  <input class="forma" type="text" name="name" id="username" placeholder="Name">
+                  <span class="error"> <?php echo $nameErr;?></span>
+                  <br>
+                  <input class="forma" type="text" name="email" id="email" placeholder="Email" >
+                  <span class="error"> <?php echo $emailErr;?></span>
+                  <br>
+                 
+                  <textarea style="background-color:white;" class="forma1" name="comment" id="textarea" cols="30" rows="10" placeholder="Message"></textarea>
+                  <br>
+                
+                  <input class="butoni" type="submit" name="submit" value="Submit">  
                 </form>
+                <?php
+                  echo "<h2 style='color:white;'>Your Input:</h2>";
+                  echo $name;
+                  echo "<br>";
+                  echo $email;
+                  echo "<br>";
+                  echo $website;
+                  echo "<br>";
+                  echo $comment;
+                  
+                  ?>
+
+                <!-- <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" name="contact-us" id="form" method="post">
+                  <div id="message"></div>
+                  <input class="forma" type="text" name="name" id="username" placeholder="Name"  >
+                  <input class="forma" type="email" name="email" id="email" placeholder="Email" >
+                  <textarea class="forma1" name="comment" id="textarea" cols="30" rows="10"  ></textarea > 
+                  <input class="butoni" type="submit" name="submit" value="SUBMIT">
+                </form> -->
             </div>
         </div>
         <div class="copyrights">

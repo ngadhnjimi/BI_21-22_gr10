@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 13, 2014 at 07:23 AM
+-- Generation Time: May 30, 2022 at 07:23 AM
 -- Server version: 5.6.12
 -- PHP Version: 5.5.3
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `bolt`
+-- Database: `ecommerce`
 --
 CREATE DATABASE IF NOT EXISTS `IB-grupi10` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `IB-grupi10`;
